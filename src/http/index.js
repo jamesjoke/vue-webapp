@@ -1,7 +1,7 @@
-import axios from "axios";
-import router from "../router";
-import storage from "@/util/storage";
-import { Toast } from "vant";
+import axios from 'axios'
+import router from '../router'
+import storage from '@/utils/storage'
+import { Toast } from 'vant'
 
 /**
  * 提示函数
@@ -12,20 +12,20 @@ const tip = msg => {
     message: msg,
     duration: 1000,
     forbidClick: true
-  });
-};
+  })
+}
 /**
  * 跳转登录页
  * 携带当前页面路由，以期在登录页面完成登录后返回当前页面
  */
 const toLogin = () => {
   router.replace({
-    path: "/",
+    path: '/',
     query: {
       redirect: router.currentRoute.fullPath
     }
-  });
-};
+  })
+}
 /**
  * 请求失败后的错误统一处理
  * @param {Number} status 请求失败的状态码
@@ -35,26 +35,26 @@ const errorHandle = (status, other) => {
   switch (status) {
     // 401: 未登录状态，跳转登录页
     case 401:
-      toLogin();
-      break;
+      toLogin()
+      break
     // 403 token过期
     // 清除token并跳转登录页
     case 403:
-      tip("登录过期，请重新登录");
+      tip('登录过期，请重新登录')
       // localStorage.removeItem('token');
       // store.commit('loginSuccess', null);
       // setTimeout(() => {
       //     toLogin();
       // }, 1000);
-      break;
+      break
     // 404请求不存在
     case 404:
-      tip("请求的资源不存在");
-      break;
+      tip('请求的资源不存在')
+      break
     default:
-      console.log(other);
+      console.log(other)
   }
-};
+}
 // 环境的切换
 // if (process.env.NODE_ENV == "development") {
 //   axios.defaults.baseURL = "/api";
@@ -64,21 +64,21 @@ const errorHandle = (status, other) => {
 //   axios.defaults.baseURL = "http://api.123dailu.com/";
 // }
 // 创建axios实例
-const instance = axios.create({ timeout: 1000 * 12 });
+const instance = axios.create({ timeout: 1000 * 12 })
 // 设置post请求头
-instance.defaults.headers.post["Content-Type"] = "application/json";
+instance.defaults.headers.post['Content-Type'] = 'application/json'
 
 // 请求拦截器
 axios.interceptors.request.use(
   config => {
-    const token = storage.get("token");
-    token && (config.headers.Authorization = token);
-    return config;
+    const token = storage.get('token')
+    token && (config.headers.Authorization = token)
+    return config
   },
   error => {
-    return Promise.error(error);
+    return Promise.error(error)
   }
-);
+)
 // 响应拦截器
 instance.interceptors.response.use(
   // 请求成功
@@ -86,11 +86,11 @@ instance.interceptors.response.use(
 
   // 请求失败
   error => {
-    const { response } = error;
+    const { response } = error
     if (response) {
       // 请求已发出，但是不在2xx的范围
-      errorHandle(response.status, response.data.message);
-      return Promise.reject(response);
+      errorHandle(response.status, response.data.message)
+      return Promise.reject(response)
     } else {
       // 处理断网的情况
       // eg:请求超时或断网时，更新state的network状态
@@ -98,12 +98,12 @@ instance.interceptors.response.use(
       // 关于断网组件中的刷新重新获取数据，会在断网组件中说明
       if (!window.navigator.onLine) {
         //    store.commit('changeNetwork', false);
-        console.log("断网");
+        console.log('断网')
       } else {
-        return Promise.reject(error);
+        return Promise.reject(error)
       }
     }
   }
-);
+)
 
-export default instance;
+export default instance
