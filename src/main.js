@@ -7,7 +7,6 @@ import api from './api' // 导入api接口
 import utils from './utils/util' // 导入api接口
 import RegexPlugin from './utils/regex.plugin' // 导入api接口
 
-
 import 'vant/lib/index.css'
 import 'amfe-flexible'
 import fastclick from 'fastclick'

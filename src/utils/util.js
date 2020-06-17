@@ -14,13 +14,13 @@ const utils = {
    */
 
   getDate() {
-    let myDate = new Date()
-    let year = myDate.getFullYear()
-    let month = myDate.getMonth() + 1
-    let date = myDate.getDate()
-    let h = myDate.getHours()
-    let m = myDate.getMinutes()
-    let s = myDate.getSeconds()
+    const myDate = new Date()
+    const year = myDate.getFullYear()
+    const month = myDate.getMonth() + 1
+    const date = myDate.getDate()
+    const h = myDate.getHours()
+    const m = myDate.getMinutes()
+    const s = myDate.getSeconds()
     return (
       year +
       '-' +

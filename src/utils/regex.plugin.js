@@ -17,7 +17,7 @@ RegexPlugin.install = function(Vue) {
     // 手机号
     phone: /^1[3456789]\d{9}$/,
     // 从业资格证只能输入字母与数字
-    qualification: /^\w+$/,
+    qualification: /^\w+$/
   }
 }
 
